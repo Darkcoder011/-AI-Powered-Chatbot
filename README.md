@@ -1,71 +1,98 @@
-# AI-Powered NLP Chatbot
+# 🤖 AI-Powered NLP Chatbot
 
-A full-featured AI-powered NLP chatbot built with Python, TensorFlow, and AWS services. This chatbot leverages advanced natural language processing capabilities to provide intelligent, personalized responses while maintaining high performance and scalability.
+A sophisticated AI-powered NLP chatbot built with Python, TensorFlow, and AWS services. This chatbot leverages state-of-the-art natural language processing to deliver intelligent, contextual, and personalized responses while ensuring enterprise-grade performance and scalability.
 
-## System Architecture Flow
+## 🏗 System Architecture
+
+### High-Level Flowchart
 
 ```mermaid
-graph TD
-    A[User] -->|Sends Message| B[API Gateway]
-    B -->|Routes Request| C[Lambda Function]
-    C -->|Process Message| D[Chatbot Core]
+flowchart TD
+    %% User Interaction Layer
+    A[User] -->|1. Sends Message| B[API Gateway]
+    B -->|2. Routes Request| C[Lambda Function]
+    C -->|3. Process Request| D[Chatbot Core]
     
-    subgraph "NLP Processing"
-        D -->|Extract Intent| E[BERT Model]
-        D -->|Analyze Sentiment| F[Sentiment Analyzer]
-        D -->|Get Context| G[Session Manager]
+    %% Core Processing
+    subgraph "🔍 NLP Processing Pipeline"
+        D -->|4.1 Intent Extraction| E[BERT/GPT Model]
+        D -->|4.2 Sentiment Analysis| F[Sentiment Analyzer]
+        D -->|4.3 Context Management| G[Session Manager]
+        
+        E -->|4.1.1 Query KB| K[(Knowledge Base)]
+        E -->|4.1.2 Load Model| L[(ML Models)]
+        F -->|4.2.1 Update Context| G
     end
     
-    subgraph "Data Storage"
-        H[(DynamoDB Users)]
-        I[(DynamoDB Sessions)]
-        J[(DynamoDB Interactions)]
-        K[(S3 Knowledge Base)]
-        L[(S3 Models)]
+    %% Data Layer
+    subgraph "💾 Data Storage"
+        H[(User Profiles)]
+        I[(Sessions)]
+        J[(Interactions)]
+        K
+        L
     end
     
-    E -->|Query| K
-    E -->|Load Model| L
-    G -->|Read/Write| I
-    D -->|Log Interaction| J
+    %% Data Flow
+    G <-->|Read/Write| I
+    D -->|Log| J
     D -->|User Data| H
     
-    D -->|Generate Response| M[Response Formatter]
-    M -->|Return Response| C
-    C -->|Send Response| B
-    B -->|Deliver Response| A
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#bbf,stroke:#333,stroke-width:2px
-    style C fill:#bfb,stroke:#333,stroke-width:2px
-    style D fill:#fbf,stroke:#333,stroke-width:2px
+    %% Response Flow
+    D -->|5. Generate Response| M[Response Formatter]
+    M -->|6. Format Response| N[Response Generator]
+    N -->|7. Add Context| O[Context Enricher]
+    O -->|8. Personalize| P[Personalization Engine]
+    
+    %% Response Path
+    P -->|9. Return| C
+    C -->|10. Send| B
+    B -->|11. Deliver| A
+    
+    %% Styling
+    classDef user fill:#f9f,stroke:#333,stroke-width:2px
+    classDef aws fill:#ff9,stroke:#333,stroke-width:2px
+    classDef process fill:#bdf,stroke:#333,stroke-width:2px
+    classDef storage fill:#bfb,stroke:#333,stroke-width:2px
+    
+    class A user
+    class B,C aws
+    class D,E,F,G,M,N,O,P process
+    class H,I,J,K,L storage
 ```
 
-### Flow Description
+### Detailed Flow Explanation
 
-1. **User Interaction**
-   - User sends a message through the API Gateway
-   - Request is routed to Lambda Function
-   - Chatbot Core processes the message
+#### 1️⃣ User Interaction Layer
+- **API Gateway**: Secure entry point for all requests
+- **Request Validation**: Input sanitization and rate limiting
+- **Authentication**: JWT token validation
 
-2. **NLP Processing**
-   - BERT Model extracts intent and entities
-   - Sentiment Analyzer processes emotion
-   - Session Manager maintains conversation context
+#### 2️⃣ Core Processing Engine
+- **Chatbot Core**: Central orchestrator for all operations
+- **NLP Pipeline**:
+  - **Intent Recognition**: BERT/GPT models for understanding user intent
+  - **Entity Extraction**: Identify key information in user queries
+  - **Sentiment Analysis**: Detect user emotion and tone
+  - **Context Management**: Maintain conversation state
 
-3. **Data Storage**
-   - DynamoDB tables store:
-     - User profiles and preferences
-     - Active sessions and context
-     - Interaction history
-   - S3 buckets store:
-     - Knowledge base for responses
-     - ML models and embeddings
+#### 3️⃣ Data Management
+- **User Profiles**: Personalization and preferences
+- **Session Storage**: Conversation history and context
+- **Interaction Logs**: Analytics and improvement
+- **Knowledge Base**: Domain-specific information
+- **Model Storage**: ML models and embeddings
 
-4. **Response Generation**
-   - Response Formatter creates personalized response
-   - Response flows back through the system
-   - User receives contextual reply
+#### 4️⃣ Response Generation
+- **Response Formatter**: Structure the response
+- **Context Enricher**: Add relevant context
+- **Personalization Engine**: Tailor responses to user preferences
+- **Multi-modal Support**: Text, images, and rich content
+
+#### 5️⃣ Performance & Monitoring
+- **Real-time Analytics**: Track performance metrics
+- **Error Handling**: Graceful degradation
+- **Logging**: Comprehensive audit trail
 
 ## Features
 
